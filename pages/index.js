@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Pagination from '@material-ui/lab/Pagination';
+
+
+
 
 
 
 const AnimePage = ({ data }) => {
+
+    const [pageNum, setPageNum] = useState(1);
+    let animePerPage = 9;
+    let animeDisplayed = pageNum * animePerPage;
+    let pageCount = Math.floor(data?.Page?.media.length / animePerPage);
+
+
 
     const styles = {
         root: {
@@ -38,33 +49,51 @@ const AnimePage = ({ data }) => {
         },
         description: {
             backgroundColor: 'white'
+        },
+        paginationContainer: {
+            backgroundColor: 'grey',
         }
 
-    }
+    };
+
+
+    console.log(data, 'data coming in')
+    const animeList = data?.Page?.media.slice(animeDisplayed, animeDisplayed + animePerPage).map(animeObj => (
+        < div style={styles.cardContainer} key={animeObj.id} >
+            < div style={styles.card}  >
+                <img src={animeObj.coverImage.large} />
+                <p style={styles.title}> <b>{animeObj.title.english}</b> </p>
+                <em ><p >{animeObj.description}</p></em>
+            </div>
+        </div>
+    ));
 
     return (
         <Paper style={styles.root}>
-            <Grid container spacing={3} justify='center' >
-                <Grid item xs={12} style={styles.header}>
+            <Grid container spacing={3} justify='center' alignItems='center' >
+                <Grid item xs={12} style={styles.header} align='center'>
                     <Typography variant='h2' align='center'>
                         Welcome to the Anime Page
                     </Typography>
-                    <Typography variant='caption' align='right'>
+                    <Typography variant='caption' >
                         Powered by <b>Rakeem G.</b>
                     </Typography>
                 </Grid>
-
                 <Grid item align='center' >
                     <Grid container justify='center'>
-                        {data?.Page?.media.map(animeObj => (
-                            < div style={styles.cardContainer} key={animeObj.id} >
-                                < div style={styles.card}  >
-                                    <img src={animeObj.coverImage.large} />
-                                    <p style={styles.title}> <b>{animeObj.title.english}</b> </p>
-                                    <em ><p >{animeObj.description}</p></em>
-                                </div>
-                            </div>
-                        ))}
+                        {animeList}
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} style={styles.paginationContainer} align='center'>
+                    <Grid container justify='center'>
+                        <Pagination
+                            variant='outlined'
+                            color='primary'
+                            onChange={(e, value) => setPageNum(value)}
+                            defaultPage={1}
+                            page={pageNum}
+                            count={pageCount}
+                        />
                     </Grid>
                 </Grid>
             </Grid>
@@ -75,11 +104,9 @@ const AnimePage = ({ data }) => {
 export default AnimePage
 
 export const getServerSideProps = async () => {
-
     try {
         let res = await fetch("http://localhost:3000/api/handler");
-        let data = await res.json()
-
+        let data = await res.json();
         return {
             props: data
         }
