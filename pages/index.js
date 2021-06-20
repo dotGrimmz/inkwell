@@ -58,12 +58,12 @@ const AnimePage = ({ data }) => {
 
 
     console.log(data, 'data coming in')
-    const animeList = data?.Page?.media.slice(animeDisplayed, animeDisplayed + animePerPage).map(animeObj => (
-        < div style={styles.cardContainer} key={animeObj.id} >
+    const animeList = data?.Page?.media.slice(animeDisplayed, animeDisplayed + animePerPage).map((animeObj) => (
+        < div style={styles.cardContainer} key={animeObj.id} data-cy={"animeContainer"} >
             < div style={styles.card}  >
                 <img src={animeObj.coverImage.large} />
-                <p style={styles.title}> <b>{animeObj.title.english}</b> </p>
-                <em ><p >{animeObj.description}</p></em>
+                <p style={styles.title} > <b data-cy={`animeTitle`}>{animeObj.title.english}</b> </p>
+                <em ><p data-cy={`animeDescription`}>{animeObj.description}</p></em>
             </div>
         </div>
     ));
@@ -87,6 +87,7 @@ const AnimePage = ({ data }) => {
                 <Grid item xs={12} style={styles.paginationContainer} align='center'>
                     <Grid container justify='center'>
                         <Pagination
+                            data-cy="pagination"
                             variant='outlined'
                             color='primary'
                             onChange={(e, value) => setPageNum(value)}
