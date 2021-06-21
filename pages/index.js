@@ -1,6 +1,6 @@
 import React from 'react';
 import ContextImplementation from './context/ContextImplementation';
-import AnimeDisplay from '../pages/components/AnimeDisplay.js'
+import AnimeDisplay from '../components/AnimeDisplay.tsx';
 
 
 
