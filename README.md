@@ -15,11 +15,24 @@ Displays a list of popular anime
   run npm start
   
   
- ## Notes from the Developer
- 
-Backend: I usually abstract away differnt parts of handling requests with a controller file, this then passes the req to a service file which handles the logic for the data
-manipulation. This case did not have a direct database for my api to integrate with but if it did I would have a schema or domain file which holds the shape and property
-types of the object. 
+## Unit Testing with Cypress and Storybook 
 
-Frontend: Next JS client side rendering was new for me, component lifecycle was one issue I strugged with when it came to fetching and displaying the data 
-usually rendering from the client side. A service class file would have been created on a larger application to call methods from the front end which the headers and cookies required for auth are set
+```
+npm run storybook 
+
+```
+In a second terminal
+
+```
+npm run cypress-open 
+
+```
+
+
+<img width="800" alt="Screen Shot 2021-06-21 at 8 08 05 AM" src="https://user-images.githubusercontent.com/47502785/122760658-5ab2d300-d269-11eb-8b25-28f432fbda82.png">
+
+Select the desired feature file for the test you want to run
+
+Electron 89 browser is best for debugging purposes
+ 
+ 
